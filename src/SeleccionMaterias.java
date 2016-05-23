@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -22,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 public class SeleccionMaterias extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
+    String[] sArrayListaMateSele;
+    int contadorMaterias = 0;
 
     /**
      * Creates new form SeleccionMaterias
@@ -29,10 +33,10 @@ public class SeleccionMaterias extends javax.swing.JFrame {
     public SeleccionMaterias() {
 
         initComponents();
+        sArrayListaMateSele = new String[6];
 
         modelo = new DefaultTableModel();
-                tablaSemestres.setModel(modelo);
-
+        tablaSemestres.setModel(modelo);
 
         modelo.addColumn("SEMESTRE 1");
         modelo.addColumn("SEMESTRE 2");
@@ -69,6 +73,11 @@ public class SeleccionMaterias extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        SpinnerNumberModel nm = new SpinnerNumberModel();
+        nm.setValue(7);
+        nm.setMaximum(20);
+        nm.setMinimum(7);
+        spiHoras.setModel(nm);
     }
 
     /**
@@ -80,8 +89,22 @@ public class SeleccionMaterias extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jSpinner1 = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaSemestres = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAMateSeleccionadas = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        spiHoras = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        bntContinuar = new javax.swing.JButton();
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,26 +121,113 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         ));
         tablaSemestres.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaSemestres.setDragEnabled(true);
+        tablaSemestres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaSemestresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaSemestres);
+
+        txtAMateSeleccionadas.setColumns(20);
+        txtAMateSeleccionadas.setRows(5);
+        jScrollPane3.setViewportView(txtAMateSeleccionadas);
+
+        jLabel1.setText("Materias Seleccionadas:");
+
+        jLabel2.setText("Hora de inicio:");
+
+        jLabel3.setText("Hrs");
+
+        bntContinuar.setText("Generar");
+        bntContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntContinuarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(spiHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addComponent(jLabel2))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bntContinuar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(spiHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bntContinuar)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablaSemestresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSemestresMouseClicked
+        // TODO add your handling code here:
+        int fila = tablaSemestres.rowAtPoint(evt.getPoint());
+        int columna = tablaSemestres.columnAtPoint(evt.getPoint());
+        if ((fila > -1) && (columna > -1)) {
+            //System.out.println(modelo.getValueAt(fila, columna));
+            if (contadorMaterias <= 5) {
+                sArrayListaMateSele[contadorMaterias] = modelo.getValueAt(fila, columna).toString();
+                txtAMateSeleccionadas.append(sArrayListaMateSele[contadorMaterias] + '\n');
+                contadorMaterias++;
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Limite maximo de materias a seleccionar: 6", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+            //for (int i = 0; i < sArrayListaMateSele.length; i++) {
+            //    System.out.println(sArrayListaMateSele[i]);
+            //}
+            System.out.println(contadorMaterias);
+        }
+
+    }//GEN-LAST:event_tablaSemestresMouseClicked
+
+    private void bntContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntContinuarActionPerformed
+        // TODO add your handling code here:
+        Busqueda busqueda = new Busqueda();
+        busqueda.setsArrayMateSele(sArrayListaMateSele);
+        busqueda.setiHora(Integer.parseInt(spiHoras.getValue().toString()));
+        busqueda.conectar();
+    }//GEN-LAST:event_bntContinuarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,11 +265,19 @@ public class SeleccionMaterias extends javax.swing.JFrame {
 
     }
 
-    public void llenarTabla() {
 
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntContinuar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JSpinner spiHoras;
     private javax.swing.JTable tablaSemestres;
+    private javax.swing.JTextArea txtAMateSeleccionadas;
     // End of variables declaration//GEN-END:variables
 }

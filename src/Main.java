@@ -19,5 +19,7 @@ public class Main {
 
     SeleccionMaterias materias = new SeleccionMaterias();
     materias.setVisible(true);
+    //Busqueda busqueda = new Busqueda();
+    //busqueda.conectar();
 }
 }
