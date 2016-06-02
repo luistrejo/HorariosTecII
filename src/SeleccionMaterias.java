@@ -53,7 +53,7 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         modelo.addColumn("SEMESTRE 9");
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "pass");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "minombreesluis");
             for (int i = 1; i < 9; i++) {
                 PreparedStatement updateemp = con.prepareStatement("SELECT * FROM carga_semestral WHERE Clave LIKE ?");
                 updateemp.setString(1, i + "P%");
@@ -317,6 +317,8 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         busqueda.setsArrayMateSele(sArrayListaMateSele);
         busqueda.setiHora(Integer.parseInt(spiHoras.getValue().toString()));
         txtAResul.append(busqueda.conectar());
+        Archivo archivo = new Archivo();
+        archivo.escribir(txtAMateSeleccionadas.getText(),spiHoras.getValue().toString(), txtAResul.getText() );
     }//GEN-LAST:event_bntContinuarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
