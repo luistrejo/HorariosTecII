@@ -18,7 +18,6 @@ public class Busqueda {
     int iHora;
     private String[] sArrayMateSele;
     private Connection conexion;
-    private String[] sArrayResultadosQuery;
 
     public int getiHora() {
         return iHora;
@@ -44,7 +43,8 @@ public class Busqueda {
         this.conexion = conexion;
     }
 
-    public void conectar() {
+    public String conectar() {
+        String resultado = "";
         try {
             String url = ("jdbc:mysql://localhost/horarios_isc_enero");
             Connection conn = DriverManager.getConnection(url, "root", "pass");
@@ -59,24 +59,22 @@ public class Busqueda {
                         + " where C.id_docente = P.iddocentes \n"
                         + " and materia = '" + sArrayMateSele[i] + "' and\n"
                         + " Lunes >= " + iHora + " order by Lunes");
-
+                
                 while (rs.next()) {
                     String lastName = rs.getString("Materia");
                     String sHora = rs.getString("lunes");
+                    String sMaestro = rs.getString("nombre");
                     System.out.print(lastName + " - ");
                     System.out.println(sHora);
+                    resultado = resultado + lastName + " - " + sHora + " Hrs - " + sMaestro + "\n";
                 }
             }
 
             conn.close();
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
         }
-    }
-
-    public void buscaHorario() {
-
+        return resultado;
     }
 
 }
