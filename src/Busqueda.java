@@ -15,16 +15,24 @@ import java.sql.Statement;
  */
 public class Busqueda {
 
-    int iHora;
+    static int iHoraInicio, iHoraFinal;
     private String[] sArrayMateSele;
     private Connection conexion;
 
-    public int getiHora() {
-        return iHora;
+    public int getiHoraFinal() {
+        return iHoraFinal;
     }
 
-    public void setiHora(int iHora) {
-        this.iHora = iHora;
+    public void setiHoraFinal(int iHoraFinal) {
+        this.iHoraFinal = iHoraFinal;
+    }
+
+    public int getiHoraInicio() {
+        return iHoraInicio;
+    }
+
+    public void setiHoraInicio(int iHoraInicio) {
+        this.iHoraInicio = iHoraInicio;
     }
 
     public String[] getsArrayMateSele() {
@@ -47,9 +55,11 @@ public class Busqueda {
         String resultado = "";
         try {
             String url = ("jdbc:mysql://localhost/horarios_isc_enero");
-            Connection conn = DriverManager.getConnection(url, "root", "minombreesluis");
+            Connection conn = DriverManager.getConnection(url, "root", "pass");
             Statement stmt = conn.createStatement();
             ResultSet rs;
+            boolean bResultados = false;
+
 
             System.out.println("Lista: ");
             for (int i = 0; i < sArrayMateSele.length; i++) {
@@ -58,15 +68,19 @@ public class Busqueda {
                         + "  from clases C, docentes P \n"
                         + " where C.id_docente = P.iddocentes \n"
                         + " and materia = '" + sArrayMateSele[i] + "' and\n"
-                        + " Lunes >= " + iHora + " order by Lunes");
-                
+                        + " Lunes >= " + iHoraInicio + " and Lunes <= " + iHoraFinal + " order by Lunes");
+
                 while (rs.next()) {
-                    String lastName = rs.getString("Materia");
+                    bResultados = true;
+                    String sMateria = rs.getString("Materia");
                     String sHora = rs.getString("lunes");
                     String sMaestro = rs.getString("nombre");
-                    System.out.print(lastName + " - ");
+                    System.out.print(sMateria + " - ");
                     System.out.println(sHora);
-                    resultado = resultado + lastName + " - " + sHora + " Hrs - " + sMaestro + "\n";
+                    resultado = resultado + sMateria + " - " + sHora + " Hrs - " + sMaestro + "\n";
+                }
+                if (bResultados == false) {
+                    resultado = "No se encontraron resultados, intente con una configuración distinta";
                 }
             }
 

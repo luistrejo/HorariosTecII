@@ -1,4 +1,5 @@
 
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
@@ -25,23 +28,22 @@ import javax.swing.table.DefaultTableModel;
  * @author Luis Trejo
  */
 public class SeleccionMaterias extends javax.swing.JFrame {
-
+    
     private DefaultTableModel modelo;
     private String[] sArrayListaMateSele;
     private int contadorMaterias = 0;
     private int iLimiteMaterias;
-    
     /**
      * Creates new form SeleccionMaterias
      */
     public SeleccionMaterias() {
-
+        
         initComponents();
         sArrayListaMateSele = new String[7];
         modelo = new DefaultTableModel();
         tablaSemestres.setModel(modelo);
         iLimiteMaterias = 6;
-
+                
         modelo.addColumn("SEMESTRE 1");
         modelo.addColumn("SEMESTRE 2");
         modelo.addColumn("SEMESTRE 3");
@@ -51,9 +53,9 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         modelo.addColumn("SEMESTRE 7");
         modelo.addColumn("SEMESTRE 8");
         modelo.addColumn("SEMESTRE 9");
-
+        
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "minombreesluis");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "pass");
             for (int i = 1; i < 9; i++) {
                 PreparedStatement updateemp = con.prepareStatement("SELECT * FROM carga_semestral WHERE Clave LIKE ?");
                 updateemp.setString(1, i + "P%");
@@ -67,16 +69,22 @@ public class SeleccionMaterias extends javax.swing.JFrame {
                 }
                 modelo.addRow(object);
             }
-
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
-        SpinnerNumberModel nm = new SpinnerNumberModel();
-        nm.setValue(7);
-        nm.setMaximum(20);
-        nm.setMinimum(7);
-        spiHoras.setModel(nm);
+        
+        SpinnerNumberModel spiNumModelInicio = new SpinnerNumberModel();
+        spiNumModelInicio.setValue(7);
+        spiNumModelInicio.setMaximum(20);
+        spiNumModelInicio.setMinimum(7);
+        spiHoras.setModel(spiNumModelInicio);
+        
+        SpinnerNumberModel spiNumModelFinal = new SpinnerNumberModel();
+        spiNumModelFinal.setValue(7);
+        spiNumModelFinal.setMaximum(20);
+        spiNumModelFinal.setMinimum(7);
+        spiHorasSalida.setModel(spiNumModelFinal);
     }
 
     /**
@@ -99,6 +107,9 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         radio7Horas = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        spiHorasSalida = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAMateSeleccionadas = new javax.swing.JTextArea();
@@ -161,6 +172,10 @@ public class SeleccionMaterias extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Hora de salida:");
+
+        jLabel4.setText("Hrs");
+
         javax.swing.GroupLayout radioLayout = new javax.swing.GroupLayout(radio);
         radio.setLayout(radioLayout);
         radioLayout.setHorizontalGroup(
@@ -176,6 +191,12 @@ public class SeleccionMaterias extends javax.swing.JFrame {
                 .addComponent(spiHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spiHorasSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
                 .addContainerGap())
         );
         radioLayout.setVerticalGroup(
@@ -186,7 +207,10 @@ public class SeleccionMaterias extends javax.swing.JFrame {
                     .addComponent(spiHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(radio7Horas))
+                    .addComponent(radio7Horas)
+                    .addComponent(jLabel1)
+                    .addComponent(spiHorasSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -279,7 +303,7 @@ public class SeleccionMaterias extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar)
                     .addComponent(bntContinuar))
@@ -295,17 +319,14 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         int columna = tablaSemestres.columnAtPoint(evt.getPoint());
         if ((fila > -1) && (columna > -1)) {
             //System.out.println(modelo.getValueAt(fila, columna));
-            if (contadorMaterias+1 <= iLimiteMaterias) {
+            if (contadorMaterias + 1 <= iLimiteMaterias) {
                 sArrayListaMateSele[contadorMaterias] = modelo.getValueAt(fila, columna).toString();
                 txtAMateSeleccionadas.append(sArrayListaMateSele[contadorMaterias] + '\n');
                 contadorMaterias++;
-
+                
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Limite maximo de materias a seleccionar: " + iLimiteMaterias, "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-            //for (int i = 0; i < sArrayListaMateSele.length; i++) {
-            //    System.out.println(sArrayListaMateSele[i]);
-            //}
             System.out.println(contadorMaterias);
         }
 
@@ -313,21 +334,28 @@ public class SeleccionMaterias extends javax.swing.JFrame {
 
     private void bntContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntContinuarActionPerformed
         // TODO add your handling code here:
-        Busqueda busqueda = new Busqueda();
+        if (Integer.parseInt(spiHorasSalida.getValue().toString()) > Integer.parseInt(spiHoras.getValue().toString())) {
+            Busqueda busqueda = new Busqueda();
         busqueda.setsArrayMateSele(sArrayListaMateSele);
-        busqueda.setiHora(Integer.parseInt(spiHoras.getValue().toString()));
-        txtAResul.append(busqueda.conectar());
+        busqueda.setiHoraInicio(Integer.parseInt(spiHoras.getValue().toString()));
+        busqueda.setiHoraFinal(Integer.parseInt(spiHorasSalida.getValue().toString()));
+        txtAResul.setText(busqueda.conectar());
         Archivo archivo = new Archivo();
-        archivo.escribir(txtAMateSeleccionadas.getText(),spiHoras.getValue().toString(), txtAResul.getText() );
+        archivo.escribir(txtAMateSeleccionadas.getText(), txtAResul.getText());
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "La hora de fin debe ser mayor que la de inicio.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_bntContinuarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         for (int i = 0; i < iLimiteMaterias; i++) {
             sArrayListaMateSele[i] = null;
-        }txtAMateSeleccionadas.setText("");
-            txtAResul.setText("");
-            contadorMaterias = 0;
+        }
+        txtAMateSeleccionadas.setText("");
+        txtAResul.setText("");
+        contadorMaterias = 0;
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -374,15 +402,17 @@ public class SeleccionMaterias extends javax.swing.JFrame {
                 new SeleccionMaterias().setVisible(true);
             }
         });
-
+        
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntContinuar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -394,6 +424,7 @@ public class SeleccionMaterias extends javax.swing.JFrame {
     private javax.swing.JRadioButton radio7Horas;
     private javax.swing.ButtonGroup radioGroupHoras;
     private javax.swing.JSpinner spiHoras;
+    private javax.swing.JSpinner spiHorasSalida;
     private javax.swing.JTable tablaSemestres;
     private javax.swing.JTextArea txtAMateSeleccionadas;
     private javax.swing.JTextArea txtAResul;

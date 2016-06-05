@@ -20,28 +20,27 @@ public class Archivo {
     String ruta = "D://horario.txt";
     File archivo = new File(ruta);
     BufferedWriter bw;
+    Busqueda busqueda = new Busqueda();
 
-    public void escribir(String sMateSeleccionadas, String sHora, String sResultado) {
+    public void escribir(String sMateSeleccionadas, String sResultado) {
         try {
             if (archivo.exists()) {
                 //EXISTE
                 bw = new BufferedWriter(new FileWriter(archivo));
                 bw.write("Materias Seleccionadas: \r\n" 
                         + sMateSeleccionadas.replaceAll("(?!\\r)\\n", "\r\n")
-                + "\r\nHora Seleccionada: " + sHora + " Hrs \r\n" +
+                + "\r\nHora de inicio seleccionada: " + busqueda.getiHoraInicio() + " Hrs \r\n" +"Hora de salida deseada: " + busqueda.getiHoraFinal()+  " Hrs \r\n" +
                         "\r\nClases disponibles con ese criterio: \r\n" +
                         sResultado.replaceAll("(?!\\r)\\n", "\r\n"));
 
             } else {
-
-                //NO EXISTE
+              //EXISTE
                 bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write("Materias Seleccionadas: \n"
+                bw.write("Materias Seleccionadas: \r\n" 
                         + sMateSeleccionadas.replaceAll("(?!\\r)\\n", "\r\n")
-                + "Hora Seleccionada: " + sHora +
-                        "\n Clases disponibles con ese criterio: " +
+                + "\r\nHora de inicio seleccionada: " + busqueda.getiHoraInicio() + " Hrs \r\n" +"Hora de salida deseada: " + busqueda.getiHoraFinal() + " Hrs \r\n" +
+                        "\r\nClases disponibles con ese criterio: \r\n" +
                         sResultado.replaceAll("(?!\\r)\\n", "\r\n"));
-
             }
             bw.close();
         } catch (IOException ex) {
