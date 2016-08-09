@@ -13,7 +13,9 @@ import java.util.logging.Logger;
  */
 /**
  *
- * @author Luis Trejo
+ * @author Luis Trejo and Priscila Gomez
+ * Instituto Tecnologico de Chihuahua II
+ * Programacion Orientada A Objetos
  */
 public class Archivo {
 

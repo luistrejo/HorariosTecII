@@ -25,7 +25,9 @@ import javax.swing.table.DefaultTableModel;
  */
 /**
  *
- * @author Luis Trejo
+ * @author Luis Trejo and Priscila Gomez
+ * Instituto Tecnologico de Chihuahua II
+ * Programacion Orientada A Objetos
  */
 public class SeleccionMaterias extends javax.swing.JFrame {
     
@@ -55,7 +57,7 @@ public class SeleccionMaterias extends javax.swing.JFrame {
         modelo.addColumn("SEMESTRE 9");
         
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "pass");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/horarios_isc_enero", "root", "AQUI VA EL PASS DE TU SERVER LOCAL");
             for (int i = 1; i < 9; i++) {
                 PreparedStatement updateemp = con.prepareStatement("SELECT * FROM carga_semestral WHERE Clave LIKE ?");
                 updateemp.setString(1, i + "P%");

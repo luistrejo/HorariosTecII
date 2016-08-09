@@ -11,7 +11,9 @@ import java.sql.Statement;
  */
 /**
  *
- * @author Luis Trejo
+ * @author Luis Trejo and Priscila Gomez
+ * Instituto Tecnologico de Chihuahua II
+ * Programacion Orientada A Objetos
  */
 public class Busqueda {
 
@@ -55,7 +57,7 @@ public class Busqueda {
         String resultado = "";
         try {
             String url = ("jdbc:mysql://localhost/horarios_isc_enero");
-            Connection conn = DriverManager.getConnection(url, "root", "pass");
+            Connection conn = DriverManager.getConnection(url, "root", "AQUI VA EL PASS DE TU SERVER LOCAL");
             Statement stmt = conn.createStatement();
             ResultSet rs;
             boolean bResultados = false;
