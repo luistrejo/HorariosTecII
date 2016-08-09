@@ -7,7 +7,7 @@ Este generador de horarios esta realizado como parte de un proyecto escolar, pue
 
 - Muestra la carga semestral actual
 - Permite definir las características como hora de entrada y salida en la busqueda de materias
-- Finalmente muestra los clases disponibles con los parametros de busqueda, así como crea un archivo con la información (esto ultimo presenta errores)
+- Finalmente muestra los clases disponibles con los parametros de busqueda, así como crea un archivo con la información
 
 ### Instalación
 
@@ -23,6 +23,11 @@ Ambas en la linea 60:
 Connection conn = DriverManager.getConnection(url, "root", "AQUI VA EL PASS DE TU SERVER LOCAL");
 ```
 Si tienes de usuario otro distinto al default de tu servidor MYSQL cambiar **root** en esa misma linea por el usuario que tengas.
+
+También especificar una dirección correcta para guardar el archivo generado con los resultados en la linea 22 del archivo **Archivo.java**
+```
+String ruta = "C://Users//TUUSUARIO//Desktop//horario.txt";
+```
 
 ### Base de Datos
 La base de datos va dentro de los archivos con el nombre **bd.sql**.

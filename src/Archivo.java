@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class Archivo {
 
-    String ruta = "D://horario.txt";
+    String ruta = "C://Users//TUUSUARIO//Desktop//horario.txt";
     File archivo = new File(ruta);
     BufferedWriter bw;
     Busqueda busqueda = new Busqueda();
